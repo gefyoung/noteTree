@@ -1,5 +1,5 @@
 import TopUserIsland from './topUserIsland'
-import { NotionRenderer, Code, Collection, CollectionRow, Modal, Pdf, Equation } from 'react-notion-x'
+import { NotionRenderer, Code, Collection, CollectionRow, Modal} from 'react-notion-x'
 import Link from 'next/link'
 import { getCanonicalPageId } from 'notion-utils'
 
