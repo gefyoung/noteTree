@@ -119,7 +119,6 @@ export const getBrowseTopics = async ( notionId: string, username: string ): Pro
   
           if (pageProperty === 'blog' || block.parent_table === "space") {
             const workingUrl = getPageIconUrl(block)
-            console.log('workingUrl,', workingUrl)
             const title = getPageTitle(pageValue)
             const titleUrl = normalizeTitle(title)
             const topicObj = {

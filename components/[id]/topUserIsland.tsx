@@ -13,7 +13,6 @@ const UserComponentTop = ({ user }) => {
     )
   }
 
-  console.log(user)
   return (
     <>
     <div className="flex justify-center ml-">

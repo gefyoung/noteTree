@@ -52,7 +52,6 @@ export async function getStaticProps({ params }) {
   try {
     const getUserInit = { body: { username: params.id } }
     const getUser = await API.post(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/getUser", getUserInit)
-
     const notionPages = await getNotionPages(getUser.notionId)
 
     const user = {
