@@ -10,25 +10,26 @@ import NavbarComp from "../components/navbar/navbar"
 function Application({ Component, pageProps }) {
   const router = useRouter()
 
-  const [authState, setAuthState] = useState(false?? '')
+  const [userState, setUserState] = useState({
+    auth: null,
+    notionId: null,
+    username: null
+  })
 
   const getUsername = async (props) => {
-
     try {
       const isAuth = await Auth.currentCredentials()
       if (isAuth.authenticated) {
-        setAuthState(true)
         try {
           const self = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/getSelf', {})
-          setAuthState(self.username)
+          setUserState({...userState, auth: true, username: self.username, notionId: self.notionId})
         } catch {
-          
+          setUserState({...userState, auth: true })
         }
       } else {
-        setAuthState(false)
+        setUserState({...userState, auth: false })
       }
-    } catch (err) { console.log('amplify error?', err); setAuthState(false) }
-
+    } catch (err) { console.log('amplify error?', err) }
   }
 
   useEffect(() => {
@@ -39,8 +40,8 @@ function Application({ Component, pageProps }) {
     ? <Component {...pageProps} />
     : <>
     {/* <AuthContext.Provider value={{ auth: authState, setAuthState: getUsername}}> */}
-      <NavbarComp auth={authState} />
-      <Component auth={authState} updateAuth={getUsername} {...pageProps}/>
+      <NavbarComp {...userState} />
+      <Component {...userState} updateAuth={getUsername} {...pageProps}/>
       {/* </AuthContext.Provider> */}
     </>
 }

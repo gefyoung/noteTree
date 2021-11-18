@@ -5,7 +5,8 @@ import { useRouter } from 'next/router'
 import { AuthContext } from "../../utils/context";
 import Auth from '@aws-amplify/auth'
 
-const NavbarComp = ({ auth }) => {
+const NavbarComp = ({ auth, notionId, username }) => {
+  console.log(auth, notionId)
   const router = useRouter()
   // const context = useContext(AuthContext)
   // const auth = context.auth
@@ -40,11 +41,14 @@ const NavbarComp = ({ auth }) => {
         </Link>
       </span>
       <span className="px-2 py-1 mx-5 my-1 rounded hover:bg-gray-200 ">
-        { auth && <Link href={
+        {/* { auth && <Link href={
           typeof(auth) === 'string'
             ? `/${auth}`
             : `/yourPage`
         }>
+          <a>Your page</a>
+        </Link>} */}
+        { notionId && <Link href={ '/' + username } >
           <a>Your page</a>
         </Link>}
       </span>

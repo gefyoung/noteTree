@@ -22,11 +22,11 @@ export default function SplashPage() {
       <div className="flex justify-center mt-40">
         <div className="flex-col m-5 w-192">
           <div className="text-3xl">Statically render your Notion.so pages for free</div>
-          <div className="my-5 text-xl">Why?</div>
+          {/* <div className="my-5 text-xl">Why?</div>
           <div className="text-2xl">Search Engine Optimization</div>
           <div>Jumpstart your freelancing</div>
           <div>Capture long tail searches just by publishing your notes</div>
-          <div>Companies, including Notion, charge $24+ per year for static rendering</div>
+          <div>Companies, including Notion, charge $24+ per year for static rendering</div> */}
         </div>
       </div>
     </>

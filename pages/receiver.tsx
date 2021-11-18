@@ -20,16 +20,16 @@ export default function Receiver() {
     stripeUrl: null,
   })
   const modifyState = e => setState({ ...state, ...e })
-
+  console.log(process.env.NEXT_PUBLIC_STAGE)
   useEffect(() => {
     (async () => {
       /* used to populate all the settings */
       try {
         const gotSelf = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/getSelf', null)
-        console.log(gotSelf)
+        console.log("gotself", gotSelf)
         modifyState({
-          ppm: Number(gotSelf.ppm),
-          stripeReceiver: gotSelf.receiver,
+          // ppm: Number(gotSelf.ppm),
+          // stripeReceiver: gotSelf.receiver,
           available: gotSelf.available
         })
       } catch (err) {

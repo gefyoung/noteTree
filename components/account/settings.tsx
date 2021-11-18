@@ -10,10 +10,10 @@ import { AuthContext } from '../../utils/context'
 import AccountSettings from './accountSettings'
 import MessengerSettings from './messengerSettings'
 
-const Settings = ({ auth, updateAuth }) => {
+const Settings = ({ auth, updateAuth, username, notionId }) => {
 
   const [state, setState] = useState({
-    page: 'account',
+    page: '',
     notionId: null,
     username: null,
     available: null,
@@ -22,16 +22,16 @@ const Settings = ({ auth, updateAuth }) => {
   })
   const modifyState = e => setState({ ...state, ...e })
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const self = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/getSelf', null)
-        console.log('self', self)
-        setState({ ...state, username: self.username, notionId: self.notionId })
-      } catch (err) { console.log(err)}
-    })()
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const self = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/getSelf', null)
+  //       console.log('self', self)
+  //       setState({ ...state, username: self.username, notionId: self.notionId })
+  //     } catch (err) { console.log(err)}
+  //   })()
 
-  }, [])
+  // }, [])
 
   return (
     <>
@@ -46,7 +46,7 @@ const Settings = ({ auth, updateAuth }) => {
       ? <MessengerSettings modifyState={modifyState} {...state} />
       : state.page === 'account' 
       ? <AccountSettings auth={auth} updateAuth={updateAuth} /> 
-      : <UploadNotionComponent />  }
+      : <UploadNotionComponent username={username} notionId={notionId} />  }
     </div>
     </>
   )

@@ -6,7 +6,7 @@ import CustomSpinner from '../custom/spinner'
 import { useRouter } from 'next/router'
 // import '../../configureAmplify'
 
-const UploadNotionComponent = () => {
+const UploadNotionComponent = ({ username, notionId }) => {
 
   const notionRef = useRef(null)
 
