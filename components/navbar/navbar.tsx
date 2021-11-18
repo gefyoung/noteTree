@@ -6,7 +6,6 @@ import { AuthContext } from "../../utils/context";
 import Auth from '@aws-amplify/auth'
 
 const NavbarComp = ({ auth, notionId, username }) => {
-  console.log(auth, notionId)
   const router = useRouter()
   // const context = useContext(AuthContext)
   // const auth = context.auth

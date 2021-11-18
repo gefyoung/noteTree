@@ -10,7 +10,7 @@ import { AuthContext } from '../../utils/context'
 import AccountSettings from './accountSettings'
 import MessengerSettings from './messengerSettings'
 
-const Settings = ({ auth, updateAuth, username, notionId }) => {
+const Settings = ({ auth, updateAuth, username, notionId, updateUserState }) => {
 
   const [state, setState] = useState({
     page: '',
@@ -46,7 +46,7 @@ const Settings = ({ auth, updateAuth, username, notionId }) => {
       ? <MessengerSettings modifyState={modifyState} {...state} />
       : state.page === 'account' 
       ? <AccountSettings auth={auth} updateAuth={updateAuth} /> 
-      : <UploadNotionComponent username={username} notionId={notionId} />  }
+      : <UploadNotionComponent updateUserState={updateUserState} username={username} notionId={notionId} />  }
     </div>
     </>
   )

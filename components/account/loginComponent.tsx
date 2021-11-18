@@ -26,7 +26,7 @@ export default function LoginComponent({ auth, updateAuth }) {
 
   const authHandler = async (authEvent) => {
     if (authEvent === "signedin") {
-      updateAuth()
+      updateAuth(true)
     }
   }
 

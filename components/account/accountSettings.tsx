@@ -43,15 +43,15 @@ const AccountSettings = ({ auth, updateAuth }) => {
     }
   }
 
-  const signOut = async () => {
-    try {
-      await Auth.signOut()
-      updateAuth()
-      // router.push("/browse")
-    } catch { console.log('failed to signout?')}
+  // const signOut = async () => {
+  //   try {
+  //     await Auth.signOut()
+  //     updateAuth()
+  //     // router.push("/browse")
+  //   } catch { console.log('failed to signout?')}
 
-    // router.reload()
-  }
+  //   // router.reload()
+  // }
 
   const disableAccount = async () => {
     const userAuth = await Auth.currentAuthenticatedUser()
@@ -64,7 +64,7 @@ const AccountSettings = ({ auth, updateAuth }) => {
       }
     }
     await API.post(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/disableUserSelf", disableAccountInit)
-    signOut()
+    updateAuth(false)
   }
   
   return (
@@ -124,7 +124,7 @@ const AccountSettings = ({ auth, updateAuth }) => {
               <h5>Sign Out</h5>
               <button
                 type="button"
-                onClick={signOut}
+                onClick={() => updateAuth(false)}
               >Sign Out
               </button>
             </div>
