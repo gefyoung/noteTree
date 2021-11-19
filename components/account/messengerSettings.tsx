@@ -18,9 +18,6 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
 
         const registration = await navigator.serviceWorker.ready
 
-        if (props) {
-
-        }
         if (Notification.permission !== "granted") {
           Notification.requestPermission()
         }

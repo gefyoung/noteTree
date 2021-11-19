@@ -16,8 +16,7 @@ const Account = (props) => {
       <div className="flex">
         <div className="flex-1"></div><div className="w-192">{
           auth === null ? <CustomSpinner /> : auth
-            ? <Settings 
-              {...props} />
+            ? <Settings {...props} />
             : <LoginComponent auth={auth} updateAuth={updateAuth} />
         }</div>
         <div className="flex-1"></div>
