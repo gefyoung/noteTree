@@ -5,7 +5,7 @@ import Auth from '@aws-amplify/auth'
 import dynamic from "next/dynamic"
 import Head from 'next/head'
 import checkForCalls from './active/checkForCall'
-import registerSubscription  from './active/registerSubscription'
+import registerSubscription  from './registerSubscription'
 const MessageInitOT = dynamic(() => import('./active/messageOtReceiver'), { ssr: false })
 
 export default function Active() {

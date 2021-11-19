@@ -9,19 +9,15 @@ import { AuthContext } from '../utils/context'
 import Auth from '@aws-amplify/auth'
 import CustomSpinner from '../components/custom/spinner'
 
-const Account = ({ auth, updateAuth, username, notionId, updateUserState }) => {
-
+const Account = (props) => {
+  const { auth, updateAuth, username, notionId, updateUserState, available } = props
   return (
     <>
       <div className="flex">
         <div className="flex-1"></div><div className="w-192">{
           auth === null ? <CustomSpinner /> : auth
             ? <Settings 
-              updateUserState={updateUserState} 
-              auth={auth} 
-              username={username} 
-              notionId={notionId} 
-              updateAuth={updateAuth} />
+              {...props} />
             : <LoginComponent auth={auth} updateAuth={updateAuth} />
         }</div>
         <div className="flex-1"></div>

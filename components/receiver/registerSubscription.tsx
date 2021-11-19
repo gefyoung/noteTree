@@ -1,7 +1,7 @@
 import Auth from '@aws-amplify/auth'
 import API from '@aws-amplify/api'
 
-import urlBase64ToUint8Array from '../../custom/url64to8array'
+import urlBase64ToUint8Array from '../../utils/url64to8array'
 
 const registerSubscription = async () => {
     try {

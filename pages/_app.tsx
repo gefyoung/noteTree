@@ -14,13 +14,15 @@ function Application({ Component, pageProps }: AppProps) {
   const [userState, setUserState] = useState({
     auth: null,
     notionId: null,
-    username: null
+    username: null,
+    available: null
   })
 
   const updateUserState = (e: {
     auth?: Boolean, 
-    notionId?: string, 
-    username?: string
+    notionId?: String, 
+    username?: String,
+    available?: Boolean
   }) => { setUserState({...userState, ...e})}
 
   const getSelf = async (props) => {
@@ -30,9 +32,14 @@ function Application({ Component, pageProps }: AppProps) {
         if (isAuth.authenticated) {
           try {
             const self = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/getSelf', {})
-            setUserState({...userState, auth: true, username: self.username, notionId: self.notionId})
+            updateUserState({
+              auth: true, 
+              username: self.username, 
+              notionId: self.notionId, 
+              available: self.available
+            })
           } catch {
-            setUserState({...userState, auth: true })
+            updateUserState({auth: true })
           }
         } else {
           setUserState({...userState, auth: false })
@@ -41,7 +48,7 @@ function Application({ Component, pageProps }: AppProps) {
     } else /* log out */ {
       try {
         await Auth.signOut()
-        setUserState({auth: false, notionId: null, username: null})
+        updateUserState({auth: false, notionId: null, username: null})
       } catch { console.log('failed to signout?') }
     }
 

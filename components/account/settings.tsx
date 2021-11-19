@@ -10,41 +10,22 @@ import { AuthContext } from '../../utils/context'
 import AccountSettings from './accountSettings'
 import MessengerSettings from './messengerSettings'
 
-const Settings = ({ auth, updateAuth, username, notionId, updateUserState }) => {
-
-  const [state, setState] = useState({
-    page: '',
-    notionId: null,
-    username: null,
-    available: null,
-    ppm: null,
-    stripeReciever: null
-  })
-  const modifyState = e => setState({ ...state, ...e })
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const self = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/getSelf', null)
-  //       console.log('self', self)
-  //       setState({ ...state, username: self.username, notionId: self.notionId })
-  //     } catch (err) { console.log(err)}
-  //   })()
-
-  // }, [])
+const Settings = (props) => {
+  const { auth, updateAuth, username, notionId, updateUserState, available } = props
+  const [pageState, setPageState] = useState('page')
 
   return (
     <>
     <div className="flex ">
-      <div><button onClick={() => setState({...state, page: 'page'})}>Page settings</button></div>
-      <div><button onClick={() => setState({...state, page: 'account'})}>Account settings</button></div>
-      <div><button onClick={() => setState({...state, page: 'messenger'})}>Messenger settings</button></div>
+      <div><button onClick={() => setPageState('page')}>Page settings</button></div>
+      <div><button onClick={() => setPageState('account')}>Account settings</button></div>
+      <div><button onClick={() => setPageState('messenger')}>Messenger settings</button></div>
     </div>
     <div>
       {
-      state.page === 'messenger' 
-      ? <MessengerSettings modifyState={modifyState} {...state} />
-      : state.page === 'account' 
+      pageState === 'messenger' 
+      ? <MessengerSettings {...props} />
+      : pageState === 'account' 
       ? <AccountSettings auth={auth} updateAuth={updateAuth} /> 
       : <UploadNotionComponent updateUserState={updateUserState} username={username} notionId={notionId} />  }
     </div>
