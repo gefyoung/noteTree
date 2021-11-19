@@ -1,13 +1,16 @@
+import { useState } from 'react'
 import Auth from '@aws-amplify/auth'
 import API from '@aws-amplify/api'
 import { CognitoUser, } from '@aws-amplify/auth'
 import { CognitoUserX, GoogleUser } from '../../utils/types'
 import urlBase64ToUint8Array from '../../utils/url64to8array'
+import CustomSpinner from '../custom/spinner'
 
 const MessengerSettings = ({ updateUserState, notionId, username, available, ppm, stripeReciever }) => {
-  console.log('available', available)
+  const [loadingState, setLoadingState] = useState(false)
 
   const goActive = async (props: Boolean) => {
+    setLoadingState(true)
       try {
 
         const currentUser: CognitoUserX | GoogleUser = await Auth.currentAuthenticatedUser()
@@ -54,13 +57,15 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
       } catch (err) {
         console.log(err)
       }
-
+      setLoadingState(false)
   }
 
   return (
+    
     <div>
       <div className="mt-16 mb-8">You are currently {available ? 'Online' : 'Offline'}</div>
       <button onClick={() => goActive(!available)}>{available ? "Go offline" : "Go online"} </button>
+      {loadingState && <CustomSpinner />}
     </div>
   )
 }

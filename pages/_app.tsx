@@ -42,9 +42,9 @@ function Application({ Component, pageProps }: AppProps) {
             updateUserState({auth: true })
           }
         } else {
-          setUserState({...userState, auth: false })
+          updateUserState({ auth: false })
         }
-      } catch (err) { console.log('amplify error?', err) }
+      } catch (err) { updateUserState({ auth: false }); console.log('Google auth expired', err) }
     } else /* log out */ {
       try {
         await Auth.signOut()
