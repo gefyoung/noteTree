@@ -6,7 +6,7 @@ import CustomSpinner from '../../components/custom/spinner'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 
-import PaidCall from "../../components/[id]/message/paidCall"
+// import PaidCall from "../../components/[id]/message/paidCall"
 import UnpaidCall from "../../components/[id]/message/unpaidCall"
 
 const Message = () => {
@@ -65,7 +65,8 @@ const Message = () => {
       : !state.active 
       ? <div className="flex mt-40 justify-cetner">User offline</div> 
       : state.ppm 
-      ? <PaidCall targetUser={state.username}/>
+      ? <div>paid call</div>
+      // <PaidCall targetUser={state.username}/>
       : state.username === ''
       ? <Error statusCode={404}></Error> 
       : state.username 

@@ -78,7 +78,7 @@ const PaidCall = (props) => {
   return (
     state.otSession
       ? <div>
-        <MessageCaller otSession={state.otSession} targetUser={targetUser} />
+        {/* <MessageCaller otSession={state.otSession} targetUser={targetUser} /> */}
       </div>
       : stripe
         ? <div className="mx-5 mt-20">
