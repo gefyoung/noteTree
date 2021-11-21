@@ -10,8 +10,10 @@ const MessageOtComponent = (props) => {
   const [state, setState] = useState({
     busy: false,
     otSession: null,
-    apiHit: false
+    apiHit: false,
+    callEnded: false
   })
+  const modifyState = e => { console.log('in modifystate'); setState({...state, ...e}) }
   const targetUser = props.targetUser
 
   if (!state.apiHit) {
@@ -38,12 +40,16 @@ const MessageOtComponent = (props) => {
       }
     })()
   }
-
-  if (state.otSession) {
+  if (state.callEnded) {
+    return ( <div className="flex m-40 text-xl justify center">
+      Call ended
+    </div>)
+  } else if (state.otSession) {
     return (
       <div className="flex flex-col items-center">
         <div>
           <MessageComponent
+            modifyState={modifyState}
             targetUser={targetUser}
             otSession={state.otSession}
           />

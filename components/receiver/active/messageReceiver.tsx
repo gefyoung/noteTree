@@ -5,8 +5,8 @@ import PhoneButtons from '../../[id]/message/phoneButtons'
 
 declare var OT
 
-const MessageReceiver = props => {
-  const session = props.otSession
+const MessageReceiver = ({ otSession, prevMessages, modifyState }) => {
+
   const [state, setState] = useState({
     audio: true,
     video: false,
@@ -15,7 +15,7 @@ const MessageReceiver = props => {
     mic: false,
     otherUser: false
   })
-  const initialState = props.prevMessages
+  const initialState = prevMessages
   const publisherRef = useRef()
   const micPublisherRef = useRef()
   const [otherUserTyping, setOtherUserTyping] = useState(false)
@@ -30,37 +30,39 @@ const MessageReceiver = props => {
   // }
 
   const disconnectButton = async () => {
-    session.disconnect()
+    otSession.disconnect()
+    modifyState({ callEnded: true })
+
     // router.reload()
   }
 
   const onSignalSend = signalInputRefProp => {
     const signalObj = { "type": "signal", "data": "" + signalInputRefProp}
-    session.signal(signalObj)
+    otSession.signal(signalObj)
   }
 
   useEffect(() => {
-    session.on('streamCreated', ({ stream }) => {
+    otSession.on('streamCreated', ({ stream }) => {
       if (stream.hasVideo) {
         const subscriberOptions = {
           width: 230,
           height: 200,
           insertMode: 'append'
         }
-        session.subscribe(stream, "subscriber", subscriberOptions)
+        otSession.subscribe(stream, "subscriber", subscriberOptions)
       } else {
         const subscriberOptions = {
           width: 1,
           height: 1
         }
-        session.subscribe(stream, "micSubscriber", subscriberOptions)
+        otSession.subscribe(stream, "micSubscriber", subscriberOptions)
       }
       // session.subscribe(stream, "subscriber", {
       //   width: 230, height: 200, insertMode: 'append', showControls: false,
       // })
     })
-    session.on('signal', (event) => {
-      const myConnectionId = session.connection.id
+    otSession.on('signal', (event) => {
+      const myConnectionId = otSession.connection.id
       if (event.data === '%t%yping') {
         if (event.from.connectionId !== myConnectionId) {
           setOtherUserTyping(true)
@@ -77,8 +79,10 @@ const MessageReceiver = props => {
       textArea.scrollTop = textArea.scrollHeight
       }
     })
-    session.on('connectionDestroyed', (connectionEvent) => {
-      session.disconnect()
+    otSession.on('connectionDestroyed', (connectionEvent) => {
+      otSession.disconnect()
+      modifyState({ callEnded: true })
+      
       // callDisconnected()
     })
 
@@ -92,13 +96,13 @@ const MessageReceiver = props => {
       height: 1,
       videoSource: null,
     }
-    micPublisherRef.current = session.publish('micPublisher', pubOptions)
+    micPublisherRef.current = otSession.publish('micPublisher', pubOptions)
   }
   const unPublish = () => {
-    session.unpublish(publisherRef.current)
+    otSession.unpublish(publisherRef.current)
   }
   const unPublishMic = () => {
-    session.unpublish(micPublisherRef.current)
+    otSession.unpublish(micPublisherRef.current)
   }
 
   const publishVideo = () => {
@@ -109,7 +113,7 @@ const MessageReceiver = props => {
       height: 70,
       audioSource: null
     }
-    publisherRef.current = session.publish('publisher', pubOptions)
+    publisherRef.current = otSession.publish('publisher', pubOptions)
   }
   const publishScreen = async () => {
     const userMedia = await OT.getUserMedia({ videoSource: 'screen' })
@@ -121,7 +125,7 @@ const MessageReceiver = props => {
       height: 70,
       videoSource: userMedia.getVideoTracks()[0],
     }
-    publisherRef.current = session.publish('publisher', pubOptions)
+    publisherRef.current = otSession.publish('publisher', pubOptions)
   }
 
     return (
@@ -132,7 +136,7 @@ const MessageReceiver = props => {
           otherUser={true}
           textState={textState}
           onSignalSend={onSignalSend}
-          session={session}
+          session={otSession}
         />}
         <div id="publisher" ></div>
       {otherUserTyping ? <div>other user is typing</div> : <br/>}

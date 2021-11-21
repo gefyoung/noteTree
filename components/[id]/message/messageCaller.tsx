@@ -6,7 +6,7 @@ import API from '@aws-amplify/api'
 
 declare var OT
 
-const MessageComponent = ({ targetUser, otSession }) => {
+const MessageComponent = ({ targetUser, otSession, modifyState }) => {
   const [state, setState] = useState({
     audio: true,
     video: false,
@@ -31,20 +31,20 @@ const MessageComponent = ({ targetUser, otSession }) => {
 
   const router = useRouter()
 
-  const disconnectWithAPI = async () => {
-    try {
-      navigator.sendBeacon(
-        process.env.NEXT_PUBLIC_APIGATEWAY_URL +
-        "/disconnectCall" +
-        "?receiver=" + targetUser +
-        "&sessionId=" + sessionId
-      )
-    } catch (err) {
-      console.log(err)
-    }
-    session.disconnect()
-    router.replace(`/${targetUser}/review`)
-  }
+  // const disconnectWithAPI = async () => {
+  //   try {
+  //     navigator.sendBeacon(
+  //       process.env.NEXT_PUBLIC_APIGATEWAY_URL +
+  //       "/disconnectCall" +
+  //       "?receiver=" + targetUser +
+  //       "&sessionId=" + sessionId
+  //     )
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  //   session.disconnect()
+  //   router.replace(`/${targetUser}/review`)
+  // }
 
   const onSignalSend = async signalInputRefProp => {
     let txtMessage = signalInputRefProp
@@ -69,16 +69,16 @@ const MessageComponent = ({ targetUser, otSession }) => {
     }
   }
 
-  window.onunload = event => {
-    event.preventDefault()
-    event.returnValue = ""
-    navigator.sendBeacon(
-      process.env.NEXT_PUBLIC_APIGATEWAY_URL +
-      "/disconnectCall" +
-      "?receiver=" + targetUser +
-      "&sessionId=" + sessionId
-    )
-  }
+  // window.onunload = event => {
+  //   event.preventDefault()
+  //   event.returnValue = ""
+  //   navigator.sendBeacon(
+  //     process.env.NEXT_PUBLIC_APIGATEWAY_URL +
+  //     "/disconnectCall" +
+  //     "?receiver=" + targetUser +
+  //     "&sessionId=" + sessionId
+  //   )
+  // }
 
   const publishMic = () => {
       // OT.getDevices((devices) => {
@@ -166,15 +166,15 @@ const MessageComponent = ({ targetUser, otSession }) => {
       }
     })
     session.on('connectionDestroyed', () => {
-      console.log('connectionDestroyed')
       session.disconnect()
-      router.replace(`/${targetUser}/review`)
-      navigator.sendBeacon(
-        process.env.NEXT_PUBLIC_APIGATEWAY_URL +
-          "/disconnectCall" +
-          "?receiver=" + targetUser +
-          "&sessionId=" + session.id
-      )
+      modifyState({callEnded: true})
+      // router.replace(`/${targetUser}/review`)
+      // navigator.sendBeacon(
+      //   process.env.NEXT_PUBLIC_APIGATEWAY_URL +
+      //     "/disconnectCall" +
+      //     "?receiver=" + targetUser +
+      //     "&sessionId=" + session.id
+      // )
     })
     session.on('signal', (event) => {
       const myConnectionId = session.connection.id
@@ -216,7 +216,11 @@ const MessageComponent = ({ targetUser, otSession }) => {
             session={session} 
             state={state} 
             setState={setState}/>
-          <button className="m-5 mt-10" id="disconnect" onClick={() => disconnectWithAPI()}>Disconnect</button>
+          <button 
+            className="m-5 mt-10" 
+            id="disconnect" 
+            onClick={() => modifyState({callEnded: true})}
+          >Disconnect</button>
             <div id="micSubscriber" ></div>
             <div id="micPublisher" ></div>
         </div>

@@ -23,18 +23,21 @@ export default function Active() {
   useEffect(() => {
     (async () => {
       try {
+
         const otSession: {
           sessionId: string
           apikey: string
           Receiver: string
           token: string
         } = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/getSession", null)
+
         modifyState({
           sessionId: otSession.sessionId,
           apikey: otSession.apikey,
           Receiver: otSession.Receiver,
           token: otSession.token
         })
+        
       } catch (err) {
         console.log(err)
         modifyState({

@@ -18,7 +18,6 @@ const UploadNotionComponent = ({ username, notionId, updateUserState }) => {
   const saveNotionId = async () => {
     setLoadingState(true)
     const parsedId = notionRef.current.value ? parsePageId(notionRef.current.value) : null
-    let username = ''
     try {
       const saveNotionInit = {
         body: {

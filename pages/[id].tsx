@@ -14,7 +14,7 @@ export interface User {
   notionId: string
   [key: string]: any
 }
-export default function User({ user }: User) {
+export default function User({ user, username, notionId, updateUserState }: User) {
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function User({ user }: User) {
         user={user}
         recordMap={user.notionDetails.recordMap}
       /> 
-      : <UploadNotionComponent />
+      : <UploadNotionComponent username={username} notionId={notionId} updateUserState={updateUserState}/>
       }
     </>
   )
