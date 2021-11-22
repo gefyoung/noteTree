@@ -11,7 +11,6 @@ const MessageInitOT = ({ prevMessages, tokenData }) => {
   })
   const modifyState = e => setState({...state, ...e})
 
-  const tokenDataProps = tokenData
   if (state.callEnded) {
     return (
       <div className="flex m-40 text-xl justify center">Call ended</div>
@@ -26,8 +25,8 @@ const MessageInitOT = ({ prevMessages, tokenData }) => {
       />
     )
   } else {
-    const otSession = OT.initSession(tokenDataProps.apikey, tokenDataProps.sessionId)
-    otSession.connect(tokenDataProps.token, function (err) {
+    const otSession = OT.initSession(tokenData.apikey, tokenData.sessionId)
+    otSession.connect(tokenData.token, function (err) {
       if (err) { console.log(err) } else {
         setState({ ...state, session: otSession })
       }

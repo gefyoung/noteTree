@@ -25,11 +25,6 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
   const [textState, dispatchTextState] = useReducer(reducer, initialState)
   const publisherRef = useRef()
   const micPublisherRef = useRef()
-  const session = otSession
-  
-  const sessionId = session.id
-
-  const router = useRouter()
 
   // const disconnectWithAPI = async () => {
   //   try {
@@ -48,7 +43,7 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
 
   const onSignalSend = async signalInputRefProp => {
     let txtMessage = signalInputRefProp
-    session.signal(
+    otSession.signal(
       { type: "signal", data: "" + txtMessage },
       function signalCallback(err) {
         if (err) {
@@ -94,14 +89,14 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
         // height: 1,
         videoSource: null,
       }
-      micPublisherRef.current = session.publish('micPublisher', pubOptions)
+      micPublisherRef.current = otSession.publish('micPublisher', pubOptions)
   }
   const unPublishMic = () => {
-    session.unpublish(micPublisherRef.current)
+    otSession.unpublish(micPublisherRef.current)
   }
   const unPublish = () => {
     console.log('unpublish,', publisherRef.current)
-    session.unpublish(publisherRef.current)
+    otSession.unpublish(publisherRef.current)
   }
   const publishVideo = () => {
     const pubOptions = {
@@ -112,7 +107,7 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
       audioSource: null
       // videoSource: null,
     }
-    publisherRef.current = session.publish('publisher', pubOptions)
+    publisherRef.current = otSession.publish('publisher', pubOptions)
   }
   const publishScreen = async () => {
     const userMedia = await OT.getUserMedia({ videoSource: 'screen' })
@@ -125,13 +120,17 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
       height: 70,
       videoSource: userMedia.getVideoTracks()[0],
     }
-    publisherRef.current = session.publish('publisher', pubOptions)
+    publisherRef.current = otSession.publish('publisher', pubOptions)
+  }
+  const disconnectButton = () => {
+    otSession.disconnect()
+    modifyState({ callEnded: true })
   }
 
   useEffect(() => {
-    session.on('connectionCreated', (connectionEvent) => {    
+    otSession.on('connectionCreated', (connectionEvent) => {    
       const connectionId = connectionEvent.connection.id
-      const myConnectionId = session.connection.id
+      const myConnectionId = otSession.connection.id
       /* another person has joined, send Start time to API */
       if (connectionId !== myConnectionId) { 
         window.onunload = event => {
@@ -141,32 +140,33 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
             process.env.NEXT_PUBLIC_APIGATEWAY_URL +
               "/disconnectCall" +
               "?receiver=" + targetUser +
-              "&sessionId=" + session.id
+              "&sessionId=" + otSession.id
           )
         }
         setState({...state, otherUser: true})
         dispatchTextState({ data: `${targetUser} connected`})
       }
     })
-    session.on('streamCreated', ({ stream }) => {
+    otSession.on('streamCreated', ({ stream }) => {
       if (stream.hasVideo) {
         const subscriberOptions = {
           width: 500,
           height: 400,
           insertMode: 'append'
         }
-        session.subscribe(stream, "subscriber", subscriberOptions)
+        otSession.subscribe(stream, "subscriber", subscriberOptions)
       } else {
         const subscriberOptions = {
           insertDefaultUI: false
           // width: 1,
           // height: 1
         }
-        session.subscribe(stream, subscriberOptions)
+        otSession.subscribe(stream, subscriberOptions)
       }
     })
-    session.on('connectionDestroyed', () => {
-      session.disconnect()
+    otSession.on('connectionDestroyed', () => {
+      console.log('connection destroyed')
+      otSession.disconnect()
       modifyState({callEnded: true})
       // router.replace(`/${targetUser}/review`)
       // navigator.sendBeacon(
@@ -176,8 +176,8 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
       //     "&sessionId=" + session.id
       // )
     })
-    session.on('signal', (event) => {
-      const myConnectionId = session.connection.id
+    otSession.on('signal', (event) => {
+      const myConnectionId = otSession.connection.id
       if (event.data === '%t%yping') {
         if (event.from.connectionId !== myConnectionId) {
           setOtherUserTyping(true)
@@ -213,13 +213,13 @@ const MessageComponent = ({ targetUser, otSession, modifyState }) => {
             publishVideo={publishVideo}
             publishMic={publishMic} 
             unPublish={unPublish} 
-            session={session} 
+            otSession={otSession} 
             state={state} 
             setState={setState}/>
           <button 
             className="m-5 mt-10" 
             id="disconnect" 
-            onClick={() => modifyState({callEnded: true})}
+            onClick={() => disconnectButton()}
           >Disconnect</button>
             <div id="micSubscriber" ></div>
             <div id="micPublisher" ></div>

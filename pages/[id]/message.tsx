@@ -37,10 +37,9 @@ const Message = () => {
         })
       } catch (err) {
         console.log(err)
-        setState({ ...state, username: '' })
+        setState({ ...state, username: '', loading: false })
+      }
     }
-  }
-
     getUserFromURL()
     const date = new Date()
     const timeStart = date.getTime()

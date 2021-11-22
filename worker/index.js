@@ -37,6 +37,7 @@ self.addEventListener('push', function (event) {
 
 self.addEventListener('notificationclick', function (event) {
   /* can't use process.env, process is undefined */
+  // console.log("NOTIFICATIONCLICKEND", event.data.text())
   const devAddress = 'localhost:3000/receiver'
   const prodAddress = 'https://notetree.me/receiver'
   let matchingClient = null

@@ -61,7 +61,7 @@ export async function getStaticProps({ params }) {
     const notionDetails = getUser.notionId ? await getNotionPage(getUser.notionId) : null
     const user = {
       Username: getUser.username,
-      userIcon: notionDetails.userIcon,
+      userIcon: notionDetails?.userIcon,
       // active: getUser.active,
       // busy: getUser.busy,
       // ppm: getUser.ppm,

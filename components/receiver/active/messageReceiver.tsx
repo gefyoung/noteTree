@@ -80,6 +80,7 @@ const MessageReceiver = ({ otSession, prevMessages, modifyState }) => {
       }
     })
     otSession.on('connectionDestroyed', (connectionEvent) => {
+      console.log('connectionDestroyed')
       otSession.disconnect()
       modifyState({ callEnded: true })
       
