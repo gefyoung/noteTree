@@ -5,6 +5,7 @@ import AboutComp from '../../components/about/aboutComp'
 export default function Privacy() {
   return (
     <>
+    <div>
       <AboutComp />
       <div className="mx-10">
       <div className="mt-3 text-lg font-semibold">
@@ -19,6 +20,12 @@ export default function Privacy() {
         Other than as required by law, or in response to subpoenas that authorize access, 
         personal information is not actively shared.
         In particular, we do not re-distribute or sell personal information collected on our web servers.
+      </div>
+      <div></div>
+      <div>
+      We want to process as little personal information as possible when you use our website. That's why we've chosen Fathom Analytics for our website analytics, which doesn't use cookies and complies with the GDPR, ePrivacy (including PECR), COPPA and CCPA. Using this privacy-friendly website analytics software, your IP address is only briefly processed, and we (running this website) have no way of identifying you. As per the CCPA, your personal information is de-identified. You can read more about this on Fathom Analytics' website.
+
+The purpose of us using this software is to understand our website traffic in the most privacy-friendly way possible so that we can continually improve our website and business. The lawful basis as per the GDPR is "f); where our legitimate interests are to improve our website and business continually." As per the explanation, no personal data is stored over time.
       </div>
       <div className="mt-3 text-lg">
         Information collected
@@ -75,6 +82,7 @@ export default function Privacy() {
         {/* Contact: */}
       </div>
       {/* <div>You can e-mail me at geoff@talktree.me</div> */}
+    </div>
     </div>
     </>
   )

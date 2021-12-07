@@ -14,7 +14,7 @@ const CreateYourPage = (props: PageProps) => {
   const [pageState, setPageState] = useState('create')
 
   return (
-    <div className="flex justify-center py-10 mt-20 border-2 border-black rounded-3xl">
+    <div className="flex justify-center py-10 mt-8 border-2 border-black md:mx-10 rounded-3xl">
       {pageState === 'login' 
       ? <LogIn {...props} setPageState={setPageState}/>
       : pageState ==='resetPass'

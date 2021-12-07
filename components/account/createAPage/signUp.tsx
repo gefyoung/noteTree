@@ -29,7 +29,7 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
 
     try {
       await Auth.signUp({
-        username: "" + loginState.username,
+        username: "" + loginState.email,
         password: "" + loginState.password,
         attributes: {
           email: loginState.email
@@ -53,11 +53,11 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
     e.preventDefault();
     setSubmitConfirmationState(true)
     try {
-      await Auth.confirmSignUp(loginState.username, loginState.code)
+      await Auth.confirmSignUp(loginState.email, loginState.code)
       setSubmitConfirmation("accepted")
       setSubmitConfirmationState(false)
       const authSignInRes = await Auth.signIn(loginState.email, loginState.password)
-      router.push('/' + authSignInRes.username)
+      router.push('/account')
     } catch (err) {
       console.log(err)
       setSubmitConfirmation("denied")
@@ -66,13 +66,13 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="mb-10 text-3xl">Create an account</div>
+    <div className="flex flex-col ">
+      <div className="mb-10 text-3xl ">Create an account</div>
       <div className="flex justify-center mt-5">
         <Google {...props} setPageState={setPageState} />
       </div>
     <div className="flex justify-center mt-5">Or</div>
-      {!submitAccountState ? <div className="m-5">
+      {!submitAccountState ? <div className="my-5">
         <div className="mb-5">
           Email
           <div>
@@ -120,8 +120,8 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
         </div>
 
       </div>}
-      <UserAgreement />
-      <div className="mt-10">
+      <div className=""><UserAgreement /></div>
+      <div className="mt-10 ">
         Already have an account? <span className="text-blue-500 cursor-pointer " onClick={() => setPageState('login')}>LOG IN</span>
       </div>
     </div>
