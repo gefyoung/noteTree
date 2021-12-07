@@ -70,8 +70,6 @@ export const getNotionPages = async ( notionId: string ): Promise<{
 
     const notionTopics = []
     const allPages = await getAllPagesInSpace(notionId, null, notion.getPage.bind(notion))
-    console.log("parentIcon", parentIcon)
-
     for (const [pageKey, pageValue] of Object.entries(allPages)) {
       const title = getPageTitle(pageValue)
       const titleUrl = normalizeTitle(title)

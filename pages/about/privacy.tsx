@@ -23,9 +23,9 @@ export default function Privacy() {
       </div>
       <div></div>
       <div>
-      We want to process as little personal information as possible when you use our website. That's why we've chosen Fathom Analytics for our website analytics, which doesn't use cookies and complies with the GDPR, ePrivacy (including PECR), COPPA and CCPA. Using this privacy-friendly website analytics software, your IP address is only briefly processed, and we (running this website) have no way of identifying you. As per the CCPA, your personal information is de-identified. You can read more about this on Fathom Analytics' website.
+      We want to process as little personal information as possible when you use our website. That&apos;s why we&apos;ve chosen Fathom Analytics for our website analytics, which doesn&apos;t use cookies and complies with the GDPR, ePrivacy (including PECR), COPPA and CCPA. Using this privacy-friendly website analytics software, your IP address is only briefly processed, and we (running this website) have no way of identifying you. As per the CCPA, your personal information is de-identified. You can read more about this on Fathom Analytics&apos; website.
 
-The purpose of us using this software is to understand our website traffic in the most privacy-friendly way possible so that we can continually improve our website and business. The lawful basis as per the GDPR is "f); where our legitimate interests are to improve our website and business continually." As per the explanation, no personal data is stored over time.
+The purpose of us using this software is to understand our website traffic in the most privacy-friendly way possible so that we can continually improve our website and business. The lawful basis as per the GDPR is &quot;f); where our legitimate interests are to improve our website and business continually.&quot; As per the explanation, no personal data is stored over time.
       </div>
       <div className="mt-3 text-lg">
         Information collected

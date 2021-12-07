@@ -72,7 +72,7 @@ export default function Custom404() {
     }
     
     getAssumedUser()
-  }, [])
+  }, [router])
 
   
   return <>

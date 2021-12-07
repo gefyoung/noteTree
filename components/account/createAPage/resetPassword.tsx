@@ -45,7 +45,7 @@ const ResetPassword = ({ setPageState }) => {
     <>
     {!sendCodeState 
       ? <div className="mx-5">
-          Tell us the email address associated with your account, and we'll send you an email with a code to reset your password.
+          Tell us the email address associated with your account, and we&apos;ll send you an email with a code to reset your password.
           <div className="mt-5 mb-2">
             Email
             <div className="mb-5">

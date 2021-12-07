@@ -82,7 +82,7 @@ const LogIn = ({ setPageState, ...props }: CreatePageProps) => {
         <UserAgreement />
 
         <div className="mt-10">
-          Don't have an account? <span className="text-blue-500 cursor-pointer" onClick={() => setPageState('signUp')}>SIGN UP</span>
+          Don&apos;t have an account? <span className="text-blue-500 cursor-pointer" onClick={() => setPageState('signUp')}>SIGN UP</span>
         </div>
       </div>
 
