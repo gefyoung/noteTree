@@ -4,8 +4,11 @@ import CustomSpinner from "../../custom/spinner"
 import '../../../configureAmplify'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import UserAgreement from "./userAgreement";
+import Google from "./google";
+import { CreatePageProps } from "../../../utils/types";
 
-const LogIn = ({ setPageState }) => {
+const LogIn = ({ setPageState, ...props }: CreatePageProps) => {
 
   const [hiddenPassState, setHiddenPassState] = useState(true)
 
@@ -40,20 +43,10 @@ const LogIn = ({ setPageState }) => {
 
   return (
     <>
-      <span>By continuing, you agree to our </span>
-      <span className="text-blue-500" >
-        <Link href="/about/tos"><a>User Agreement</a></Link>
-      </span>
-      <span> and </span>
-      <span className="text-blue-500">
-        <Link href="/about/privacy"><a>Privacy Policy</a></Link>
-      </span>
-      <span>
-        .
-      </span>
       <div >
         <div className="m-5">
           <div className="container" >
+            <Google {...props} setPageState={setPageState}/>
             <div className="mb-5">
               Email
               <div>
@@ -85,6 +78,8 @@ const LogIn = ({ setPageState }) => {
               <div className="link-button">Forgot your <span onClick={() => setPageState('resetPass')} className="text-blue-500 cursor-pointer">password</span>?</div>
             </div>
           </div>
+          
+          <UserAgreement />
         </div>
         <div className="mt-10">
           Don't have an account? <span className="text-blue-500 cursor-pointer" onClick={() => setPageState('signUp')}>SIGN UP</span>

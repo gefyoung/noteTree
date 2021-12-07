@@ -3,7 +3,7 @@ import Auth from '@aws-amplify/auth'
 import { useRouter } from 'next/router'
 import CustomSpinner from '../../custom/spinner'
 import '../../../configureAmplify'
-import Link from 'next/link'
+import UserAgreement from './userAgreement'
 import Google from './google'
 import { CreatePageProps, PageProps } from '../../../utils/types'
 
@@ -65,73 +65,67 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
     }
   }
 
-    return (
-      <div className="container">
+  return (
+    <div className="flex flex-col">
+      <div className="mb-10 text-3xl">Create an account</div>
+      <div className="flex justify-center mt-5">
         <Google {...props} setPageState={setPageState} />
-        <span>By continuing, you agree to our </span>
-        <span className="text-blue-500" >
-          <Link href="/about/tos"><a>User Agreement</a></Link>
-        </span>
-        <span> and </span>
-        <span className="text-blue-500">
-          <Link href="/about/privacy"><a>Privacy Policy</a></Link>
-        </span>
-        <span>
-          .
-        </span>
-        {!submitAccountState ? <div className="m-5">
-          <div className="mb-5">
-            Email
-            <div>
-              <input 
-                onChange={(event) => setLoginState({...loginState, email: event.target.value})} 
-                disabled={(errState === "accepted")} 
-                placeholder="enter email">
-              </input>{(errState === "emailBad") && ' ❌'}
-            </div>
-          </div>
-          <div className="mb-5">
-            Password
-            <div className="container-fluid row">
-              <input
-                type={hiddenPassState ? "password" : "text"}
-                onChange={(event) => setLoginState({...loginState, password: event.target.value})}
-                disabled={(errState === "accepted")}
-                placeholder="enter password"
-              ></input>
-              <span
-                className="ml-2"
-                style={{ cursor: "pointer" }}
-                onClick={() => setHiddenPassState(!hiddenPassState)}>
-                <span></span>{(hiddenPassState) ? 'show' : 'hide'}
-              </span>
-              {(errState === "passBad") && ' ❌'}
-
-            </div>
-            {/* <div>please make it complicated</div> */}
-          </div>
-          <div className="mb-5">
-            <button disabled={(errState === "accepted")} onClick={userAddHandler}>Submit</button>
-            {(errState === "accepted") && ' ✔️'}
-            {submitAccountState && <CustomSpinner />}
-          </div></div> : <div className="m-5 column">
-
-          <div className="mb-2">We sent a confirmation code to your email</div>
-          <div className="mb-3">
-            <input onChange={(event) => setLoginState({...loginState, code: '' + event.target.value})} placeholder="Confirmation code"></input>
-          </div>
-          <div>
-            <button disabled={submitConfirmationState} onClick={userVerifyHandler}>submit</button>
-            {submitConfirmationState && <CustomSpinner />}
-            {(submitConfirmation === "accepted") ? <CustomSpinner /> : (submitConfirmation === "denied") ? ' ❌' : null}
-          </div>
-
-        </div>}
-        <div className="mt-10">
-          Already have an account? <span className="text-blue-500 cursor-pointer " onClick={() => setPageState('login')}>LOG IN</span>
-        </div>
       </div>
-    )
+    <div className="flex justify-center mt-5">Or</div>
+      {!submitAccountState ? <div className="m-5">
+        <div className="mb-5">
+          Email
+          <div>
+            <input
+              onChange={(event) => setLoginState({ ...loginState, email: event.target.value })}
+              disabled={(errState === "accepted")}
+              placeholder="enter email">
+            </input>{(errState === "emailBad") && ' ❌'}
+          </div>
+        </div>
+        <div className="mb-5">
+          Password
+          <div className="container-fluid row">
+            <input
+              type={hiddenPassState ? "password" : "text"}
+              onChange={(event) => setLoginState({ ...loginState, password: event.target.value })}
+              disabled={(errState === "accepted")}
+              placeholder="enter password"
+            ></input>
+            <span
+              className="ml-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => setHiddenPassState(!hiddenPassState)}>
+              <span></span>{(hiddenPassState) ? 'show' : 'hide'}
+            </span>
+            {(errState === "passBad") && ' ❌'}
+
+          </div>
+          {/* <div>please make it complicated</div> */}
+        </div>
+        <div className="mb-5">
+          <button disabled={(errState === "accepted")} onClick={userAddHandler}>Submit</button>
+          {(errState === "accepted") && ' ✔️'}
+          {submitAccountState && <CustomSpinner />}
+        </div></div> : <div className="m-5 column">
+
+        <div className="mb-2">We sent a confirmation code to your email</div>
+        <div className="mb-3">
+          <input onChange={(event) => setLoginState({ ...loginState, code: '' + event.target.value })} placeholder="Confirmation code"></input>
+        </div>
+        <div>
+          <button disabled={submitConfirmationState} onClick={userVerifyHandler}>submit</button>
+          {submitConfirmationState && <CustomSpinner />}
+          {(submitConfirmation === "accepted") ? <CustomSpinner /> : (submitConfirmation === "denied") ? ' ❌' : null}
+        </div>
+
+      </div>}
+      <UserAgreement />
+      <div className="mt-10">
+        Already have an account? <span className="text-blue-500 cursor-pointer " onClick={() => setPageState('login')}>LOG IN</span>
+      </div>
+    </div>
+  )
 
 
 }
