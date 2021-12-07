@@ -1,6 +1,8 @@
-
+import { useRouter } from 'next/router'
 
 const UserComponentTop = ({ user }) => {
+
+  const router = useRouter()
 
   const openMessagePhone = () => {
     const devSite = `/${user.Username}/message`
@@ -13,12 +15,18 @@ const UserComponentTop = ({ user }) => {
     )
   }
 
+  const goBack =() => {
+    
+    router.back()
+  }
+
   return (
     <>
-    <div className="flex justify-center ml-">
+    <div className="flex justify-center mb-10">
       <div className="flex flex-row m-5 ml-20 w-192">
-        <div className="flex-shrink-0 mr-20">
+        <div onClick={() => goBack()} className="flex-shrink-0 mr-20 cursor-pointer">
           {user.userIcon && <img width={100} height={100} src={user.userIcon} ></img>}
+          <div className="flex justify-center text-sm ">back</div>
         </div>
 
         <div className="flex flex-col">

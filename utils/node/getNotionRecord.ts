@@ -4,6 +4,19 @@ import { Block } from 'notion-types'
 
 const notion = new NotionAPI()
 
+
+const getPageIconUrl = (block) => {
+  const s3Icon = block.format['page_icon']
+  const encoded = `https://notion.so/image/${encodeURIComponent(s3Icon)}`
+  const imageUrl = new URL(encoded)
+  imageUrl.searchParams.set('table', 'block')
+  imageUrl.searchParams.set('id', block.id)
+  imageUrl.searchParams.set('cache', 'v2')
+  return imageUrl.toString()
+}
+
+
+
 export async function getNotionPage(topicProp) {
   try {
 
@@ -40,7 +53,8 @@ export async function getNotionPage(topicProp) {
 export const getNotionPages = async ( notionId: string ): Promise<{
   title: string
   titleUrl: string
-  recordMap: Block
+  recordMap: Block,
+  userIcon: string
 }[]> => {
   try {
     const recordMap = await notion.getPage(notionId)
@@ -56,6 +70,7 @@ export const getNotionPages = async ( notionId: string ): Promise<{
 
     const notionTopics = []
     const allPages = await getAllPagesInSpace(notionId, null, notion.getPage.bind(notion))
+    console.log("parentIcon", parentIcon)
 
     for (const [pageKey, pageValue] of Object.entries(allPages)) {
       const title = getPageTitle(pageValue)
@@ -83,15 +98,6 @@ export type TopicObjs = {
   recordMap: Block
 }
 
-const getPageIconUrl = (block) => {
-  const s3Icon = block.format['page_icon']
-  const encoded = `https://notion.so/image/${encodeURIComponent(s3Icon)}`
-  const imageUrl = new URL(encoded)
-  imageUrl.searchParams.set('table', 'block')
-  imageUrl.searchParams.set('id', block.id)
-  imageUrl.searchParams.set('cache', 'v2')
-  return imageUrl.toString()
-}
 
 
 export const getBrowseTopics = async ( notionId: string, username: string ): Promise<Expand<TopicObjs>[]> => {

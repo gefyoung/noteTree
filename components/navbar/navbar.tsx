@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Link from 'next/link'
 import '../../configureAmplify'
 import { useRouter } from 'next/router'
@@ -24,6 +24,10 @@ const NavbarComp = ({ auth, notionId, username }) => {
 
   // const [modalState, setModalState] = useState(null)
 
+  const aboutClicked = () => {
+    window && window.fathom.trackGoal('AMD53BUZ', 0)
+  }
+
   return (
     <div className="flex">
       <div className="flex-1"></div>
@@ -36,7 +40,7 @@ const NavbarComp = ({ auth, notionId, username }) => {
       </span> */}
       <span className="px-2 py-1 mx-5 my-1 rounded hover:bg-gray-200 ">
         <Link href="/">
-          <a>About</a>
+          <a onClick={() => aboutClicked()}>About</a>
         </Link>
       </span>
       <span className="px-2 py-1 mx-5 my-1 rounded hover:bg-gray-200 ">
@@ -51,9 +55,9 @@ const NavbarComp = ({ auth, notionId, username }) => {
           <a>Your page</a>
         </Link>}
       </span>
-      <span className="px-2 py-1 mx-5 my-1 rounded hover:bg-gray-200 ">
+      <span className="px-2 py-1 mx-5 my-1 rounded hover:bg-gray-200">
         <Link href="/account">
-          <a>{auth ? "Account" : "Login  /  Sign up"}</a>
+          <a>{auth ? "Account" : "Create your page"}</a>
         </Link>
       </span>
 

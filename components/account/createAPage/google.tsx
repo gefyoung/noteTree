@@ -1,27 +1,10 @@
 
-import { ConsoleLogger } from '@aws-amplify/core';
-import { AmplifyAuthenticator, AmplifySignUp, AmplifySignIn, AmplifyAuthContainer } from '@aws-amplify/ui-react';
-import { AuthContext } from '../../utils/context';
 import { Auth } from '@aws-amplify/auth'
-import { onAuthUIStateChange } from '@aws-amplify/ui-components'
 import { useContext, useEffect, useState } from 'react'
-import API from '@aws-amplify/api'
-import CustomSpinner from '../custom/spinner';
+import { CreatePageProps, PageProps } from '../../../utils/types';
 
 
-export default function LoginComponent({ auth, updateAuth }) {
-
-  // const [state, setState] = useState({
-  //   loading: false 
-  // })
-
-  //   useEffect(() => {
-  //       setState({ loading: false })
-  //       return onAuthUIStateChange((nextAuthState, authData) => {
-  //         console.log(nextAuthState)
-  //         nextAuthState === 'signin' ? {} : setState({loading: true});
-  //       });
-  //   }, []);
+export default function Google({ ...props}: CreatePageProps) {
 
   const initGapi = () => {
     // init the Google SDK client
@@ -39,7 +22,7 @@ export default function LoginComponent({ auth, updateAuth }) {
 
   const authHandler = async (authEvent) => {
     if (authEvent === "signedin") {
-      updateAuth(true)
+      props.updateAuth(true)
     }
   }
 

@@ -1,5 +1,9 @@
 import { CognitoUser } from '@aws-amplify/auth';
 
+declare global {
+    interface Window { fathom: any, gapi: any }
+}
+
 interface UserAttributes {
     sub: string;
     email: string;
@@ -20,4 +24,17 @@ export interface GoogleUser {
     name?: string,
     picture?: string
     [key: string]: any
+}
+
+export interface PageProps {
+    auth: Boolean,
+    notionId: String,
+    username: String,
+    available: Boolean,
+    updateAuth: Function,
+    updateUserState: Function
+}
+
+export interface CreatePageProps extends PageProps {
+    setPageState: Function
   }

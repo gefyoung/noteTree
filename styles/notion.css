@@ -720,6 +720,7 @@ svg.notion-page-icon {
 .notion-list li {
   padding: 6px 0;
   white-space: pre-wrap;
+  margin-left: 24px
 }
 
 .notion-asset-wrapper {

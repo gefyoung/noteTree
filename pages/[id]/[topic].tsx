@@ -4,12 +4,15 @@ import Head from 'next/head'
 import '../../configureAmplify'
 import TopicNotion from '../../components/[id]/[topic]/topicNotion'
 import { getNotionPages } from '../../utils/node/getNotionRecord'
+import UserComponentTop from '../../components/[id]/topUserIsland'
 
 export default function Topic({ user, topic }) {
   const firstImgAddress = topic.firstImage
   const description = topic.description
   const title = topic.title
   const recordMap = topic.recordMap || null
+  user.userIcon = topic.userIcon
+
   return (
     <>
       <Head>
@@ -21,6 +24,7 @@ export default function Topic({ user, topic }) {
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script> */}
         <meta property="og:image" content={firstImgAddress}></meta>
       </Head>
+      <UserComponentTop user={user} />
       <TopicNotion recordMap={recordMap} title={title} user={user} />
     </>
   )
@@ -69,7 +73,7 @@ export async function getStaticProps({ params }) {
           title: topicObj.title,
           titleUrl: topicObj.titleUrl,
           recordMap: topicObj.recordMap,
-          // icon: topicObj.icon
+          userIcon: topicObj.userIcon
         }
       }
     })
