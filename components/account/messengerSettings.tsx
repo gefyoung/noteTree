@@ -48,6 +48,7 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
             p256dh: props ? newSubscription.keys.p256dh: null,
           }
         }
+        console.log("updateUserInit", updateUserInit)
 
         const updatedUser = await API.post(
           process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/updateAvailability', updateUserInit

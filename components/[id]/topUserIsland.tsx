@@ -5,11 +5,8 @@ const UserComponentTop = ({ user }) => {
   const router = useRouter()
 
   const openMessagePhone = () => {
-    const devSite = `/${user.Username}/message`
-    const prodSite = `${process.env.NEXT_PUBLIC_URL}/${user.Username}/message`
-    const currentSite = process.env.NEXT_PUBLIC_STAGE === 'prod' ? prodSite : devSite
     window.open(
-      devSite,
+      `/${user.Username}/message`,
       "MsgWindow",
       "width=500,height=700"
     )
