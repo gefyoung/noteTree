@@ -9,7 +9,7 @@ const UserComponentTop = ({ user }) => {
     const prodSite = `${process.env.NEXT_PUBLIC_URL}/${user.Username}/message`
     const currentSite = process.env.NEXT_PUBLIC_STAGE === 'prod' ? prodSite : devSite
     window.open(
-      currentSite,
+      devSite,
       "MsgWindow",
       "width=500,height=700"
     )
