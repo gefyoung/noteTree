@@ -14,26 +14,26 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
       try {
 
         const currentUser: CognitoUserX | GoogleUser = await Auth.currentAuthenticatedUser()
-
+        console.log('currentUser', currentUser)
         const email = currentUser instanceof CognitoUser
           ? currentUser.attributes.email
           : currentUser.email
 
         const registration = await navigator.serviceWorker.ready
-
+        console.log('registration', registration)
         if (Notification.permission !== "granted") {
           Notification.requestPermission()
         }
-
+        
         const convertedVapidKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID)
-
+        console.log('convertedVapid', convertedVapidKey)
         const subscription = await registration.pushManager.getSubscription()
           ? await registration.pushManager.getSubscription()
           : await registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: convertedVapidKey
           })
-
+        console.log('subscription', subscription)
         const subEndpoint = subscription.endpoint
 
         /* parse/stringify seems to be necessary, otherwise keys doesn't exist on that obj */
