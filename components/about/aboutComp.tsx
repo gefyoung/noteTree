@@ -15,7 +15,7 @@ export default function AboutComp() {
           Create an account and charge a price as low as $0.17/per minute to talk to you.
         </div>
         <div className="mt-5">This website is in beta</div>
-        <div>Email geoff@Talktree.me or <a href="/geoff-young" >Talktree.me/geoff-young</a></div>
+        <div>Email geoff@Talktree.me or <Link href="/gty" ><a>Talktree.me/geoff-young</a></Link></div>
         <div className="mt-5">
 
 

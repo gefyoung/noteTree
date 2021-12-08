@@ -18,7 +18,7 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
         const email = currentUser instanceof CognitoUser
           ? currentUser.attributes.email
           : currentUser.email
-
+        console.log('navigatorSW', navigator.serviceWorker)
         const registration = await navigator.serviceWorker.ready
         console.log('registration', registration)
         if (Notification.permission !== "granted") {
@@ -33,7 +33,6 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
             userVisibleOnly: true,
             applicationServerKey: convertedVapidKey
           })
-        console.log('subscription', subscription)
         const subEndpoint = subscription.endpoint
 
         /* parse/stringify seems to be necessary, otherwise keys doesn't exist on that obj */
@@ -48,7 +47,6 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
             p256dh: props ? newSubscription.keys.p256dh: null,
           }
         }
-        console.log("updateUserInit", updateUserInit)
 
         const updatedUser = await API.post(
           process.env.NEXT_PUBLIC_APIGATEWAY_NAME, '/updateAvailability', updateUserInit
