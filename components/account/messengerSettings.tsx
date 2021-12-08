@@ -25,7 +25,8 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
         if (Notification.permission !== "granted") {
           Notification.requestPermission()
         }
-        
+        console.log(registration)
+        console.log(process.env.NEXT_PUBLIC_VAPID)
         const convertedVapidKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID)
         console.log('convertedVapid', convertedVapidKey)
         const subscription = await registration.pushManager.getSubscription()
