@@ -14,13 +14,14 @@ const MessengerSettings = ({ updateUserState, notionId, username, available, ppm
       try {
 
         const currentUser: CognitoUserX | GoogleUser = await Auth.currentAuthenticatedUser()
-        console.log('currentUser', currentUser)
         const email = currentUser instanceof CognitoUser
           ? currentUser.attributes.email
           : currentUser.email
-        console.log('navigatorSW', navigator.serviceWorker)
+
+        /* if service worker doesn't work, messaging wont work, no just email alternate */
         const registration = await navigator.serviceWorker.ready
-        console.log('registration', registration)
+        // the above results in shit waiting forever
+
         if (Notification.permission !== "granted") {
           Notification.requestPermission()
         }
