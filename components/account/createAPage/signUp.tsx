@@ -5,7 +5,7 @@ import CustomSpinner from '../../custom/spinner'
 import '../../../configureAmplify'
 import UserAgreement from './userAgreement'
 import Google from './google'
-import { CreatePageProps, PageProps } from '../../../utils/types'
+import { CreatePageProps } from '../../../utils/types'
 
 const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
 
@@ -57,7 +57,7 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
       setSubmitConfirmation("accepted")
       setSubmitConfirmationState(false)
       const authSignInRes = await Auth.signIn(loginState.email, loginState.password)
-      router.push('/account')
+      props.updateAuth(true)
     } catch (err) {
       console.log(err)
       setSubmitConfirmation("denied")
@@ -77,6 +77,7 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
           Email
           <div>
             <input
+              className="px-2 py-1 bg-blue-50"
               onChange={(event) => setLoginState({ ...loginState, email: event.target.value })}
               disabled={(errState === "accepted")}
               placeholder="enter email">
@@ -87,6 +88,7 @@ const SignUp = ({ setPageState, ...props }: CreatePageProps) => {
           Password
           <div className="container-fluid row">
             <input
+              className="px-2 py-1 bg-blue-50"
               type={hiddenPassState ? "password" : "text"}
               onChange={(event) => setLoginState({ ...loginState, password: event.target.value })}
               disabled={(errState === "accepted")}

@@ -25,7 +25,7 @@ function Application({ Component, pageProps }: AppProps) {
     available?: Boolean
   }) => { setUserState({...userState, ...e})}
 
-  const getSelf = async (props) => {
+  const getSelf = async (props: boolean) => {
     if (props) {
       try {
         const isAuth = await Auth.currentCredentials()

@@ -4,10 +4,12 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 // import NavbarComp from '../components/navbar/navbar'
 import SplashComp from '../components/index/splash'
+import { getNotionPage } from '../utils/node/getNotionRecord'
 // import FooterComp from '../components/navbar/footer'
 // import About from '../components/index/about'
+import { NotionRenderer, Code, Collection, CollectionRow, Modal} from 'react-notion-x'
 
-export default function Home() {
+export default function Home({ notionDetails }) {
 //   const router = useRouter()
 //   console.log(router.locale)
 
@@ -33,12 +35,22 @@ export default function Home() {
         {/* <script src="https://static.opentok.com/v2.20.1/js/opentok.min.js"></script> */}
       </Head>
         <div className="">
-          <SplashComp />
-          <div id="about" >
-          {/* <About /> */}
-          </div>
+
+          <NotionRenderer recordMap={notionDetails.recordMap} >
+            
+          </NotionRenderer>
           
         </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  try {
+    const notionDetails = await getNotionPage("e50a7e7a84564e85a398096e07db6629")
+    return { props: { notionDetails: notionDetails } }
+  } catch (err) {
+    console.log(err)
+    return { notFound: true }
+  }
 }

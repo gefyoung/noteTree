@@ -7,6 +7,9 @@ const NavbarComp = ({ auth, notionId, username }) => {
   const aboutClicked = () => {
     window && window.fathom.trackGoal('AMD53BUZ', 0)
   }
+  const createYourPageClicked = () => {
+    window && window.fathom.trackGoal('KADITVRD', 0)
+  }
 
   return (
     <div className="flex">
@@ -32,7 +35,10 @@ const NavbarComp = ({ auth, notionId, username }) => {
             ? <a className="px-3 py-2 rounded-2xl hover:bg-gray-200">
               Account
             </a>
-            : <a className="px-3 py-2 ml-10 border-2 border-black border-solid rounded-2xl hover:bg-gray-200">
+            : <a 
+                className="px-3 py-2 ml-10 border-2 border-black border-solid rounded-2xl hover:bg-gray-200"
+                onClick={() => createYourPageClicked()}
+              >
               Create your page
             </a>}
           </Link>

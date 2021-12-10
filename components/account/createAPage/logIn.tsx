@@ -28,7 +28,7 @@ const LogIn = ({ setPageState, ...props }: CreatePageProps) => {
         passInputRef.current.value
       )
       setSubmitting(false)
-      await router.push("/" + authSignInRes.username)
+      props.updateAuth(true)
       // setPageState(false)
     } catch (err) {
       if (err.code === "UserNotFoundException") {
@@ -52,7 +52,7 @@ const LogIn = ({ setPageState, ...props }: CreatePageProps) => {
         <div className="my-5">
           Email
           <div>
-            <input className="bg-blue-50" type="email" ref={emailInputRef} placeholder="enter email"></input>
+            <input className="px-2 py-1 bg-blue-50" type="email" ref={emailInputRef} placeholder="enter email"></input>
             {errState === "emailErr" && ' ❌'}
           </div>
         </div>
@@ -60,7 +60,7 @@ const LogIn = ({ setPageState, ...props }: CreatePageProps) => {
         <div className="mb-5">
           Password
           <div>
-            <input className="bg-blue-50" type={hiddenPassState ? "password" : "text"} ref={passInputRef} placeholder="enter password"></input>
+            <input className="px-2 py-1 bg-blue-50" type={hiddenPassState ? "password" : "text"} ref={passInputRef} placeholder="enter password"></input>
             <span
               className="ml-2"
               style={{ cursor: "pointer" }}

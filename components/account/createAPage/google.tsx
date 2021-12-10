@@ -5,6 +5,7 @@ import { CreatePageProps, PageProps } from '../../../utils/types';
 
 
 export default function Google(props: CreatePageProps) {
+  const { updateAuth } = props
 
   const initGapi = () => {
     // init the Google SDK client
@@ -18,14 +19,6 @@ export default function Google(props: CreatePageProps) {
     });
   }
 
-  const federated = { googleClientId: process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT }
-
-  const authHandler = async (authEvent) => {
-    if (authEvent === "signedin") {
-      props.updateAuth(true)
-    }
-  }
-
   const createScript = () => {
     // load the Google SDK
     const script = document.createElement('script')
@@ -34,28 +27,6 @@ export default function Google(props: CreatePageProps) {
     script.onload = initGapi
     document.getElementById('div').appendChild(script)
     console.log('script', script)
-  }
-  
-  console.log("gapi", window.gapi)
-
-  useEffect(() => {
-    const ga = window.gapi && window.gapi.auth2 ?
-      window.gapi.auth2.getAuthInstance() :
-      null;
-
-    if (!ga) createScript();
-  }, [])
-
-  const signIn = () => {
-    const ga = window.gapi.auth2.getAuthInstance();
-    ga.signIn().then(
-      googleUser => {
-        getAWSCredentials(googleUser);
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
 
   const getAWSCredentials = async (googleUser) => {
@@ -73,7 +44,28 @@ export default function Google(props: CreatePageProps) {
     );
     console.log('credentials', credentials);
   }
+  
+  const signIn = () => {
+    const ga = window.gapi.auth2.getAuthInstance();
+    ga.signIn().then(
+      googleUser => {
+        getAWSCredentials(googleUser)
+        updateAuth(true)
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
+
+  useEffect(() => {
+    const ga = window.gapi && window.gapi.auth2 ?
+      window.gapi.auth2.getAuthInstance() :
+      null;
+
+    if (!ga) createScript();
+  }, [])
 
   return (
     <>
