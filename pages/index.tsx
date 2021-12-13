@@ -2,11 +2,9 @@ import Head from 'next/head'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-// import NavbarComp from '../components/navbar/navbar'
-import SplashComp from '../components/index/splash'
+
 import { getNotionPage } from '../utils/node/getNotionRecord'
-// import FooterComp from '../components/navbar/footer'
-// import About from '../components/index/about'
+
 import { NotionRenderer, Code, Collection, CollectionRow, Modal} from 'react-notion-x'
 
 export default function Home({ notionDetails }) {

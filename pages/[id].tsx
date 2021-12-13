@@ -23,7 +23,7 @@ export default function User({ user, username, notionId, updateUserState }: User
         {/* <meta name="description" content={} /> */}
         <link rel="icon" href="/treeFavicon.svg" />
         <link rel="manifest" href="/manifest.json" />
-        <meta property="og:image" content="/favicon512"></meta>
+        <meta property="og:image" content={user.userIcon}></meta>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {user.notionDetails 

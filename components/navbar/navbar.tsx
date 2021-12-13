@@ -14,7 +14,7 @@ const NavbarComp = ({ auth, notionId, username }) => {
   return (
     <div className="flex">
       <div className="flex-1"></div>
-      <div className="my-8 w-192">
+      <div className="my-8 ml-4 w-192">
         <div className="flex flex-row">
 
           <Link href="/">

@@ -73,12 +73,17 @@ export const getNotionPages = async ( notionId: string ): Promise<{
     for (const [pageKey, pageValue] of Object.entries(allPages)) {
       const title = getPageTitle(pageValue)
       const titleUrl = normalizeTitle(title)
+      console.log(pageValue)
+      // const topicIcon = getPageIconUrl(pageValue)
+      // console.log("topicIcon", topicIcon)
+
       title && (pageKey !== parentId) && notionTopics.push({
         // topicId: page,
         title: title,
         titleUrl: titleUrl,
         recordMap: pageValue,
-        userIcon: parentIcon
+        userIcon: parentIcon,
+        // topicIcon: topicIcon
       })
     }
     return notionTopics
