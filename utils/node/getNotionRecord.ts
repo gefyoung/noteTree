@@ -4,7 +4,6 @@ import { Block } from 'notion-types'
 
 const notion = new NotionAPI()
 
-
 const getPageIconUrl = (block) => {
   const s3Icon = block.format['page_icon']
   const encoded = `https://notion.so/image/${encodeURIComponent(s3Icon)}`
@@ -14,7 +13,6 @@ const getPageIconUrl = (block) => {
   imageUrl.searchParams.set('cache', 'v2')
   return imageUrl.toString()
 }
-
 
 
 export async function getNotionPage(topicProp) {

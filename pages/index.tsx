@@ -46,7 +46,7 @@ export default function Home({ notionDetails }) {
 export async function getStaticProps() {
   try {
     const notionDetails = await getNotionPage("e50a7e7a84564e85a398096e07db6629")
-    return { props: { notionDetails: notionDetails } }
+    return { props: { notionDetails: notionDetails }, revalidate: 1 }
   } catch (err) {
     console.log(err)
     return { notFound: true }
