@@ -47,8 +47,10 @@ const Message = () => {
       const date = new Date()
       const timeEnd = date.getTime()
       const timeDifference = (timeEnd - timeStart) * .001
+      const rounded = Math.round(timeDifference)
       //@ts-ignore
-      window && window.dataLayer && window.dataLayer.push({ event: 'beforeunload', lengthOfTime: timeDifference })
+      // window && window.dataLayer && window.dataLayer.push({ event: 'beforeunload', lengthOfTime: timeDifference })
+      window.fathom.trackGoal('AYN8J6V1', rounded);
     })
   }, [])
 

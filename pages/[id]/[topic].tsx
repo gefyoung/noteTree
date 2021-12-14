@@ -12,7 +12,6 @@ export default function Topic({ user, topic }) {
   const title = topic.title
   const recordMap = topic.recordMap || null
   user.userIcon = topic.userIcon
-
   return (
     <>
       <Head>
@@ -73,7 +72,9 @@ export async function getStaticProps({ params }) {
           title: topicObj.title,
           titleUrl: topicObj.titleUrl,
           recordMap: topicObj.recordMap,
-          userIcon: topicObj.userIcon
+          userIcon: topicObj.userIcon,
+          firstImage: topicObj.firstImage,
+          topicIcon: topicObj.topicIcon
         }
       }
     })

@@ -1,6 +1,6 @@
 import { NotionAPI } from 'notion-client'
 import { getPageTitle, normalizeTitle, getBlockIcon, getPageProperty, getAllPagesInSpace, getBlockParentPage } from 'notion-utils'
-import { Block } from 'notion-types'
+import { Block, BlockMap, ImageBlock, NotionMap, RecordMap } from 'notion-types'
 
 const notion = new NotionAPI()
 
@@ -12,6 +12,30 @@ const getPageIconUrl = (block) => {
   imageUrl.searchParams.set('id', block.id)
   imageUrl.searchParams.set('cache', 'v2')
   return imageUrl.toString()
+}
+const getFirstImageUrl = (block: BlockMap) => {
+  try {
+
+    for (const blockEntries of Object.entries(block)) {
+      const [ key, { value }] = blockEntries
+    /* tried to filter only values that meet ImageBlock Type, but couldn't figure it out */
+      
+      const displaySource = value?.format?.['display_source']
+      if (displaySource) { 
+        const encoded = `https://notion.so/image/${encodeURIComponent(displaySource)}`
+        const imageUrl = new URL(encoded)
+        imageUrl.searchParams.set('table', 'block')
+        imageUrl.searchParams.set('id', value.id)
+        imageUrl.searchParams.set('cache', 'v2')
+        return imageUrl.toString()
+       }
+
+    }
+
+  } catch (err) {
+    console.log('getFirstImage', err)
+  }
+  
 }
 
 
@@ -51,8 +75,10 @@ export async function getNotionPage(topicProp) {
 export const getNotionPages = async ( notionId: string ): Promise<{
   title: string
   titleUrl: string
-  recordMap: Block,
+  recordMap: Block
   userIcon: string
+  firstImage: string
+  topicIcon: string
 }[]> => {
   try {
     const recordMap = await notion.getPage(notionId)
@@ -71,9 +97,8 @@ export const getNotionPages = async ( notionId: string ): Promise<{
     for (const [pageKey, pageValue] of Object.entries(allPages)) {
       const title = getPageTitle(pageValue)
       const titleUrl = normalizeTitle(title)
-      console.log(pageValue)
-      // const topicIcon = getPageIconUrl(pageValue)
-      // console.log("topicIcon", topicIcon)
+      const firstImage = getFirstImageUrl(pageValue.block) || null
+      console.log("firstImage", firstImage)
 
       title && (pageKey !== parentId) && notionTopics.push({
         // topicId: page,
@@ -81,7 +106,8 @@ export const getNotionPages = async ( notionId: string ): Promise<{
         titleUrl: titleUrl,
         recordMap: pageValue,
         userIcon: parentIcon,
-        // topicIcon: topicIcon
+        firstImage: firstImage,
+        topicIcon: null
       })
     }
     return notionTopics
